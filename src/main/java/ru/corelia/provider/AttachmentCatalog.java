@@ -7,5 +7,5 @@ import ru.corelia.provider.model.AttachmentMetadata;
 /** Возможность находить metadata вложений и их историю. */
 public interface AttachmentCatalog {
     AttachmentMetadata find(String attachmentId, AuthContext auth);
-    List<AttachmentMetadata> versions(String attachmentId, AuthContext auth);
+    List<AttachmentMetadata> attachmentVersions(String attachmentId, AuthContext auth);
 }
