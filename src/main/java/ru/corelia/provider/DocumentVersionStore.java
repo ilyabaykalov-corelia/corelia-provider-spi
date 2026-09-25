@@ -15,5 +15,6 @@ public interface DocumentVersionStore {
     List<AttachmentMetadata> attachments(String documentId, AuthContext auth);
     DocumentVersionState state(String documentType, String documentId, AuthContext auth);
     IdempotencyReceipt receipt(String idempotencyKey, AuthContext auth);
+    List<tools.jackson.databind.JsonNode> history(String documentId, AuthContext auth);
     void commit(DocumentMutation mutation, AuthContext auth);
 }
