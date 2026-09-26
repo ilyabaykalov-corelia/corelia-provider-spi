@@ -6,5 +6,6 @@ import ru.corelia.provider.model.AvailableDocumentType;
 
 /** Доступные текущему пользователю виды документов у выбранного провайдера. */
 public interface DocumentTypeProvider {
+    /** Возвращает только типы, которые пользователь вправе создавать или просматривать. */
     List<AvailableDocumentType> available(AuthContext auth);
 }
