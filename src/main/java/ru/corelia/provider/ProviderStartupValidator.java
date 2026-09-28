@@ -1,13 +1,16 @@
 package ru.corelia.provider;
 
-import java.util.EnumSet;
+import org.springframework.stereotype.Component;
 
-/** Проверяет descriptor выбранного provider до обработки пользовательских запросов. */
+/** Проверяет resolved bindings до обработки пользовательских запросов. */
+@Component
 public final class ProviderStartupValidator {
-    private ProviderStartupValidator() {}
-    public static void validate(String selected, ProviderDescriptor provider) {
-        if (!selected.equals(provider.id())) throw new IllegalStateException("Выбран provider '" + selected + "', зарегистрирован '" + provider.id() + "'");
-        var required = EnumSet.allOf(ProviderCapability.class);
-        if (!provider.capabilities().containsAll(required)) throw new IllegalStateException("Provider '" + provider.id() + "' не предоставляет обязательные capabilities: " + required);
+    public ProviderStartupValidator(ProviderRegistry registry) {
+        for (ProviderCapability capability : ProviderCapability.values()) {
+            if (registry.provider(capability) == null) {
+                throw new IllegalStateException(
+                        "Не разрешён provider для capability '" + capability.configurationName() + "'");
+            }
+        }
     }
 }
