@@ -3,11 +3,9 @@ package ru.corelia.provider;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.stereotype.Component;
 import ru.corelia.config.CoreliaRuntimeConfig;
 
 /** Разрешает provider отдельно для каждой обязательной capability. */
-@Component
 public class ProviderRegistry {
     private final Map<ProviderCapability, ProviderDescriptor> providers;
 
