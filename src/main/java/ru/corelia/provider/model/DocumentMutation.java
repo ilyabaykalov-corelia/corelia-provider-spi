@@ -4,7 +4,21 @@ import java.util.List;
 import java.util.Map;
 import tools.jackson.databind.JsonNode;
 
-/** Атомарное изменение версии документа, независимое от модели хранилища провайдера. */
+/** Атомарное изменение версии документа, независимое от модели хранилища провайдера.
+ * @param documentId изменяемый документ
+ * @param documentType ожидаемый тип документа
+ * @param expectedVersion версия для optimistic locking
+ * @param expectedChangeToken token ожидаемого состояния
+ * @param attributes новые реквизиты
+ * @param createdVersion создаваемая версия
+ * @param closedVersion закрываемая версия
+ * @param createdAttachment добавляемое вложение
+ * @param retiredAttachment заменяемое или удаляемое вложение
+ * @param idempotencyKey ключ повтора команды
+ * @param requestHash hash команды
+ * @param response результат для повторного ответа
+ * @param history запись аудита
+ */
 public record DocumentMutation(String documentId, String documentType, int expectedVersion, String expectedChangeToken,
                                Map<String, JsonNode> attributes, DocumentVersion createdVersion,
                                DocumentVersion closedVersion, AttachmentMetadata createdAttachment,
