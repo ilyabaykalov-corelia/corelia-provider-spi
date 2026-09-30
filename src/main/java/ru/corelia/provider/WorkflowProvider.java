@@ -2,7 +2,9 @@ package ru.corelia.provider;
 
 import ru.corelia.auth.AuthContext;
 import ru.corelia.provider.model.ProcessInstance;
+import ru.corelia.provider.model.WorkflowDefinition;
 import ru.corelia.provider.model.WorkflowContext;
+import java.util.List;
 
 /** Возможность запуска и чтения процессов. */
 public interface WorkflowProvider {
@@ -10,4 +12,6 @@ public interface WorkflowProvider {
     ProcessInstance start(WorkflowContext context, AuthContext auth);
     /** Возвращает текущее состояние экземпляра процесса, доступного вызывающему пользователю. */
     ProcessInstance process(String processInstanceId, AuthContext auth);
+    /** Возвращает опубликованные процессы, которыми владеет выбранный workflow provider. */
+    default List<WorkflowDefinition> definitions(AuthContext auth) { return List.of(); }
 }
