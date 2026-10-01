@@ -4,6 +4,7 @@ import ru.corelia.auth.AuthContext;
 import ru.corelia.provider.model.ProcessInstance;
 import ru.corelia.provider.model.WorkflowDefinition;
 import ru.corelia.provider.model.WorkflowContext;
+import ru.corelia.provider.model.WorkflowValidation;
 import java.util.List;
 
 /** Возможность запуска и чтения процессов. */
@@ -14,4 +15,8 @@ public interface WorkflowProvider {
     ProcessInstance process(String processInstanceId, AuthContext auth);
     /** Возвращает опубликованные процессы, которыми владеет выбранный workflow provider. */
     default List<WorkflowDefinition> definitions(AuthContext auth) { return List.of(); }
+    /** Проверяет BPMN-процесс перед публикацией без его развёртывания. */
+    default WorkflowValidation validateDefinition(String key, String bpmnXml, AuthContext auth) {
+        throw new UnsupportedOperationException("Проверка BPMN не поддерживается выбранным workflow provider");
+    }
 }
