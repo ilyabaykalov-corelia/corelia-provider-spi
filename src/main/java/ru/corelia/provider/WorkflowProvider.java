@@ -23,4 +23,8 @@ public interface WorkflowProvider {
     default WorkflowDefinition publishDefinition(String key, String name, String bpmnXml, AuthContext auth) {
         throw new UnsupportedOperationException("Публикация BPMN не поддерживается выбранным workflow provider");
     }
+    /** Прекращает запуск новых экземпляров опубликованного процесса, сохраняя историю. */
+    default void retireDefinition(String key, AuthContext auth) {
+        throw new UnsupportedOperationException("Вывод BPMN из эксплуатации не поддерживается выбранным workflow provider");
+    }
 }
