@@ -19,4 +19,8 @@ public interface WorkflowProvider {
     default WorkflowValidation validateDefinition(String key, String bpmnXml, AuthContext auth) {
         throw new UnsupportedOperationException("Проверка BPMN не поддерживается выбранным workflow provider");
     }
+    /** Публикует проверенное определение как новую неизменяемую версию provider. */
+    default WorkflowDefinition publishDefinition(String key, String name, String bpmnXml, AuthContext auth) {
+        throw new UnsupportedOperationException("Публикация BPMN не поддерживается выбранным workflow provider");
+    }
 }
