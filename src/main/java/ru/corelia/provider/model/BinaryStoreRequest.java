@@ -19,6 +19,7 @@ public record BinaryStoreRequest(
         this(documentId, attachmentId, fileName, contentType, size, checksum, null);
     }
 
+    /** Возвращает копию запроса с ранее зарезервированной непрозрачной ссылкой. */
     public BinaryStoreRequest withReference(StorageReference value) {
         return new BinaryStoreRequest(documentId, attachmentId, fileName, contentType, size, checksum, value);
     }

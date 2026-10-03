@@ -9,6 +9,10 @@ import ru.corelia.config.CoreliaRuntimeConfig;
 public class ProviderRegistry {
     private final Map<ProviderCapability, ProviderDescriptor> providers;
 
+    /**
+     * Разрешает bindings на старте и отклоняет отсутствующую либо неоднозначную
+     * реализацию до обработки пользовательских запросов.
+     */
     public ProviderRegistry(CoreliaRuntimeConfig config, List<ProviderDescriptor> descriptors) {
         var resolved = new EnumMap<ProviderCapability, ProviderDescriptor>(ProviderCapability.class);
         for (ProviderCapability capability : requiredCapabilities(config)) {
@@ -44,10 +48,12 @@ public class ProviderRegistry {
         return capabilities;
     }
 
+    /** Возвращает descriptor выбранной capability или {@code null}, если она не требовалась приложению. */
     public ProviderDescriptor provider(ProviderCapability capability) {
         return providers.get(capability);
     }
 
+    /** Возвращает неизменяемый набор capability, обязательных для текущего приложения. */
     public java.util.Set<ProviderCapability> resolvedCapabilities() {
         return providers.keySet();
     }
