@@ -11,4 +11,6 @@ public record WorkflowDefinition(
         String status,
         Instant lastPublishedAt,
         String publishedBy,
-        long activeInstances) {}
+        long activeInstances,
+        String definitionId,
+        String deploymentId) {}
