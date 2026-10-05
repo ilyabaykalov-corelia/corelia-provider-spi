@@ -18,18 +18,26 @@ import tools.jackson.databind.JsonNode;
  * @param requestHash hash команды
  * @param response результат для повторного ответа
  * @param history запись аудита
+ * @param status новый бизнес-статус либо {@code null}, если статус не меняется
  */
 public record DocumentMutation(String documentId, String documentType, int expectedVersion, String expectedChangeToken,
                                Map<String, JsonNode> attributes, DocumentVersion createdVersion,
                                DocumentVersion closedVersion, AttachmentMetadata createdAttachment,
                                AttachmentMetadata retiredAttachment, String idempotencyKey,
-                               String requestHash, JsonNode response, JsonNode history) {
+                               String requestHash, JsonNode response, JsonNode history, String status) {
     public DocumentMutation { attributes = Map.copyOf(attributes); }
+    public DocumentMutation(String documentId, String documentType, int expectedVersion, String expectedChangeToken,
+                            Map<String, JsonNode> attributes, DocumentVersion createdVersion, DocumentVersion closedVersion,
+                            AttachmentMetadata createdAttachment, AttachmentMetadata retiredAttachment, String idempotencyKey,
+                            String requestHash, JsonNode response, JsonNode history) {
+        this(documentId, documentType, expectedVersion, expectedChangeToken, attributes, createdVersion, closedVersion,
+                createdAttachment, retiredAttachment, idempotencyKey, requestHash, response, history, null);
+    }
     public DocumentMutation(String documentId, String documentType, int expectedVersion, String expectedChangeToken,
                             Map<String, JsonNode> attributes, DocumentVersion createdVersion, DocumentVersion closedVersion,
                             AttachmentMetadata createdAttachment, AttachmentMetadata retiredAttachment, String idempotencyKey,
                             String requestHash, JsonNode response) {
         this(documentId, documentType, expectedVersion, expectedChangeToken, attributes, createdVersion, closedVersion,
-                createdAttachment, retiredAttachment, idempotencyKey, requestHash, response, null);
+                createdAttachment, retiredAttachment, idempotencyKey, requestHash, response, null, null);
     }
 }

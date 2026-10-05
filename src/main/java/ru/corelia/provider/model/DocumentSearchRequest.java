@@ -5,4 +5,6 @@ package ru.corelia.provider.model;
  * @param offset смещение первой записи
  * @param limit максимальное число записей
  */
-public record DocumentSearchRequest(String typeCode, int offset, int limit) {}
+public record DocumentSearchRequest(String typeCode, int offset, int limit, DocumentSearchFilter filter) {
+    public DocumentSearchRequest(String typeCode, int offset, int limit) { this(typeCode, offset, limit, null); }
+}

@@ -2,7 +2,12 @@ package ru.corelia.provider;
 
 import ru.corelia.auth.AuthContext;
 import ru.corelia.provider.model.ProcessInstance;
+import ru.corelia.provider.model.WorkflowDefinition;
+import ru.corelia.provider.model.WorkflowDefinitionBpmn;
 import ru.corelia.provider.model.WorkflowContext;
+import ru.corelia.provider.model.WorkflowValidation;
+import java.util.List;
+import java.util.Optional;
 
 /** Возможность запуска и чтения процессов. */
 public interface WorkflowProvider {
@@ -10,4 +15,20 @@ public interface WorkflowProvider {
     ProcessInstance start(WorkflowContext context, AuthContext auth);
     /** Возвращает текущее состояние экземпляра процесса, доступного вызывающему пользователю. */
     ProcessInstance process(String processInstanceId, AuthContext auth);
+    /** Возвращает опубликованные процессы, которыми владеет выбранный workflow provider. */
+    default List<WorkflowDefinition> definitions(AuthContext auth) { return List.of(); }
+    /** Возвращает BPMN опубликованного процесса, если provider допускает его просмотр. */
+    default Optional<WorkflowDefinitionBpmn> definitionBpmn(String key, AuthContext auth) { return Optional.empty(); }
+    /** Проверяет BPMN-процесс перед публикацией без его развёртывания. */
+    default WorkflowValidation validateDefinition(String key, String bpmnXml, AuthContext auth) {
+        throw new UnsupportedOperationException("Проверка BPMN не поддерживается выбранным workflow provider");
+    }
+    /** Публикует проверенное определение как новую неизменяемую версию provider. */
+    default WorkflowDefinition publishDefinition(String key, String name, String bpmnXml, AuthContext auth) {
+        throw new UnsupportedOperationException("Публикация BPMN не поддерживается выбранным workflow provider");
+    }
+    /** Прекращает запуск новых экземпляров опубликованного процесса, сохраняя историю. */
+    default void retireDefinition(String key, AuthContext auth) {
+        throw new UnsupportedOperationException("Вывод BPMN из эксплуатации не поддерживается выбранным workflow provider");
+    }
 }
